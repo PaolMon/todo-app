@@ -1,0 +1,90 @@
+version: '3.7'
+
+services:
+  commands:
+    container_name: todo_commands
+    image: todo/commands:1.0
+    build:
+      context: ./todo-commands
+      target: development
+    ports:
+      - ${SERVER_COMMAND_PORT}:${SERVER_COMMAND_PORT}
+    command: npm run start:dev
+    env_file:
+      - .env
+    networks:
+      - webnet
+    depends_on:
+      - mqtt
+  listener:
+    container_name: todo_listener
+    image: todo/listener:1.0
+    build:
+      context: ./todo-listener
+      target: development
+    command: npm run start:dev
+    env_file:
+      - .env
+    networks:
+      - webnet
+    depends_on:
+      - mqtt
+      - postgres
+  queries:
+    container_name: todo_queries
+    image: todo/queries:1.0
+    build:
+      context: ./todo-queries
+      target: development
+    ports:
+      - ${SERVER_QUERIES_PORT}:${SERVER_QUERIES_PORT}
+    command: npm run start:dev
+    env_file:
+      - .env
+    networks: 
+      - webnet
+    depends_on:
+      - postgres
+  mqtt:
+    container_name: eclipse-mosquitto
+    image: eclipse-mosquitto:1.6
+    networks:
+      - webnet
+    ports:
+      - target: 1883
+        published: ${TRANSPORT_PORT}
+  postgres:
+    container_name: postgres
+    image: postgres:12-alpine
+    networks:
+      - webnet
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - target: 5432
+        published: ${DB_PORT}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  nginx:
+    container_name: nginx
+    image: nginx:alpine
+    networks:
+      - webnet
+    ports: 
+      - ${NGINX_PORT}:8080
+      - 80:80
+    volumes: 
+      - ./conf.d:/etc/nginx/conf.d
+    depends_on: 
+      - postgres
+      - mqtt
+      - commands
+      - listener
+      - queries
+networks:
+  webnet:
+volumes:
+  pgdata:
