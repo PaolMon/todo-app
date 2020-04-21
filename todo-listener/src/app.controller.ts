@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import {Ctx, EventPattern, MqttContext, Payload} from "@nestjs/microservices";
-import {NewTodolistDTO, UpdateTodolistDTO} from "./models/TodolistDTO";
+import {NewTodolistDTO, UpdateTodolistDTO, DeleteTodolistDTO} from "./models/TodolistDTO";
 import {AppService} from "./app.service";
 import {Logger} from '@nestjs/common'
 
@@ -23,17 +23,17 @@ export class AppController {
     this.logger.log(data);
     this.appService.update(data).catch(
         function() {
-          this.logger.log("oh no, update non riuscito");
+          console.error("oh no, update non riuscito");
         }
     );
   }
 
   @EventPattern('delete')
-  delete(@Payload() data: UpdateTodolistDTO, @Ctx() context: MqttContext) {
+  delete(@Payload() data: DeleteTodolistDTO, @Ctx() context: MqttContext) {
     this.logger.log(data);
     this.appService.delete(data).catch(
         function() {
-          this.logger.log("oh no, delete non riuscito");
+          console.error("oh no, delete non riuscito");
         }
     );
   }
