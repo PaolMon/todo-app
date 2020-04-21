@@ -30,7 +30,7 @@ brew install docker-compose
 
 - #### **url** [POST]
 ```
-http://localhost:3000/create
+http://localhost:8080/create
 ``` 
 - #### **body**
 ```
@@ -49,7 +49,7 @@ CODE:201 CREATED
 
 -  #### **url** [GET]
 ```
- http://localhost:3001/search/{author}
+ http://localhost:8080/search/{author}
 
 ```
 
@@ -99,7 +99,7 @@ CODE:200 OK
 
 - #### **url** [POST]
 ```
-http://localhost:3000/update
+http://localhost:8080/update
 ```
 
 - #### **body**
@@ -121,7 +121,7 @@ CODE:201 CREATED
 
 - #### **url** [POST]
 ```
-http://localhost:3000/delete
+http://localhost:8080/delete
 ```
 
 - #### **body**

@@ -1,0 +1,5 @@
+2020/04/21 15:49:09 [emerg] 1#1: "user" directive is not allowed here in /etc/nginx/conf.d/default.conf:1
+2020/04/21 15:51:12 [emerg] 1#1: "user" directive is not allowed here in /etc/nginx/conf.d/default.conf:1
+2020/04/21 15:54:44 [emerg] 1#1: unexpected "}" in /etc/nginx/conf.d/default.conf:17
+2020/04/21 15:57:05 [error] 6#6: *1 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080"
+2020/04/21 15:58:51 [error] 6#6: *3 open() "/usr/share/nginx/html/create" failed (2: No such file or directory), client: 172.18.0.1, server: localhost, request: "POST /create HTTP/1.1", host: "localhost:8080"
