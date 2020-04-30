@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import {Ctx, EventPattern, MqttContext, Payload} from "@nestjs/microservices";
-import {NewTodolistDTO, UpdateTodolistDTO, DeleteTodolistDTO} from "./models/TodolistDTO";
+import {TodoModel} from "./models/todo.dto.model";
 import {AppService} from "./app.service";
 import {Logger} from '@nestjs/common'
 
@@ -12,14 +12,14 @@ export class AppController {
 
   private logger = new Logger('App Controller Listener');
 
-  @EventPattern('create')
-  insert(@Payload() data: NewTodolistDTO, @Ctx() context: MqttContext) {
+  @EventPattern('createTodo')
+  insert(@Payload() data: TodoModel, @Ctx() context: MqttContext) {
     this.logger.log(data);
     this.appService.insert(data);
   }
 
-  @EventPattern('update')
-  update(@Payload() data, @Ctx() context: MqttContext) {
+  @EventPattern('updateTodo')
+  update(@Payload() data: TodoModel, @Ctx() context: MqttContext) {
     this.logger.log(data);
     this.appService.update(data).catch(
         function() {
@@ -28,8 +28,8 @@ export class AppController {
     );
   }
 
-  @EventPattern('delete')
-  delete(@Payload() data: DeleteTodolistDTO, @Ctx() context: MqttContext) {
+  @EventPattern('deleteTodo')
+  delete(@Payload() data: TodoModel, @Ctx() context: MqttContext) {
     this.logger.log(data);
     this.appService.delete(data).catch(
         function() {

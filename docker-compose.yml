@@ -67,7 +67,7 @@ services:
       - target: 5432
         published: ${DB_PORT}
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
   nginx:
     container_name: nginx
     image: nginx:alpine

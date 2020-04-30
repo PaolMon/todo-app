@@ -24,7 +24,7 @@ const url = 'mqtt://'+process.env.TRANSPORT_HOST+':'+process.env.TRANSPORT_PORT;
       TypeOrmModule.forFeature([TodolistEntity]),
       ClientsModule.register([
         {
-          name: 'COMMAND_SERVICE',
+          name: 'EVENT_SERVICE',
           transport: Transport.MQTT,
           options: {
             url: url

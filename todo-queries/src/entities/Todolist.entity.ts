@@ -1,8 +1,11 @@
-import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from 'typeorm'
-
+import {Column, Entity, BaseEntity, PrimaryGeneratedColumn} from 'typeorm'
 
 @Entity('todo-list')
-export class TodolistEntity extends BaseEntity {
+export class TodolistEntity  extends BaseEntity {
+
+//    @Column()
+//    author: string;
+
     @PrimaryGeneratedColumn()
     _id: number;
 
@@ -10,15 +13,15 @@ export class TodolistEntity extends BaseEntity {
     uuid: string;
 
     @Column()
-    deleted: boolean;
+    title: string;
 
-    @Column()
-    author: string;
-
-    @Column()
-    task: string;
-
-    @Column()
+    @Column({default:false})
     done: boolean;
+
+    @Column()
+    percentage: number;
+
+    @Column({default:false})
+    deleted: boolean;
 
 }
